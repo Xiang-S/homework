@@ -121,7 +121,7 @@
             </el-form>
             <div class="siginup-tips">
               <span>Don't Have An Account?</span>
-              <router-link class="link-type" :to="'/register'">Sign up</router-link>
+              <router-link class="link-type" :to="'/register'" style="margin-left: 10px;">Sign up</router-link>
             </div>
             <div class="other-login">
               <div class="divider">
@@ -228,9 +228,6 @@ export default {
             })
           }).catch(() => {
             this.loading = false
-            if (this.captchaEnabled) {
-              this.getCode()
-            }
           })
         }
       })
@@ -239,8 +236,11 @@ export default {
 }
 </script>
 
-<style rel="stylesheet/scss" lang="scss">
-.el-button {
+<style rel="stylesheet/scss" lang="scss" scoped>
+::v-deep .input-items{
+  width: 340px;
+}
+::v-deep .el-button {
   width: 100%;
   height: 50px;
   background-color: rgb(128, 106, 196);
@@ -256,7 +256,7 @@ export default {
   }
 }
 
-.el-input__inner {
+::v-deep .el-input__inner {
   width: 100%;
   height: 50px;
   border-radius: 10px;
@@ -274,7 +274,6 @@ export default {
 * {
   padding: 0;
   margin: 0;
-  font-family: 'Aguazyuan', Courier, monospace;
 }
 
 .content {

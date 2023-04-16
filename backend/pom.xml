@@ -45,6 +45,8 @@
                 <scope>import</scope>
             </dependency>
 
+
+
             <!-- 阿里数据库连接池 -->
             <dependency>
                 <groupId>com.alibaba</groupId>
@@ -169,6 +171,9 @@
                 <artifactId>ruoyi-common</artifactId>
                 <version>${ruoyi.version}</version>
             </dependency>
+
+
+
 
         </dependencies>
     </dependencyManagement>

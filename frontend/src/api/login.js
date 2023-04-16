@@ -47,13 +47,14 @@ export function logout() {
 }
 
 // 获取验证码
-export function getCodeImg() {
+export function getCodeImg(data) {
   return request({
     url: '/captchaImage',
     headers: {
       isToken: false
     },
-    method: 'get',
+    method: 'post',
+    data: data,
     timeout: 20000
   })
 }
