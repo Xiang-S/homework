@@ -67,13 +67,14 @@ export default {
 <style lang="scss" scoped>
   @import "~@/assets/styles/mixin.scss";
   @import "~@/assets/styles/variables.scss";
-
+  ::v-deep .sidebar-container .submenu-title-noDropdown:hover {
+    background-color: #f7f0ff !important;
+  }
   .app-wrapper {
     @include clearfix;
     position: relative;
     height: 100%;
     width: 100%;
-
     .el-scrollbar{
       height: 100%;
     }
@@ -81,7 +82,7 @@ export default {
     ::v-deep .el-scrollbar__bar.is-vertical {
       z-index: 10;
     }
-  
+
     ::v-deep .el-scrollbar__wrap {
       overflow-x: hidden;
     }

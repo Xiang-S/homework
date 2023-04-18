@@ -6,10 +6,10 @@
 
 <script>
 export default {
-  name: 'RuoYiGit',
+  name: 'HomeworkGit',
   data() {
     return {
-      url: 'https://gitee.com/y_project/RuoYi-Vue'
+      url: 'https://github.com/Xiang-S/homework'
     }
   },
   methods: {
