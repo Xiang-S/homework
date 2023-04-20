@@ -98,7 +98,7 @@ export default {
     return {
       codeUrl: '',
       loginForm: {
-        username: 'admin',
+        username: 'admin@qq.com',
         password: 'admin123',
         rememberMe: false,
         code: '',

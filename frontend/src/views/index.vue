@@ -5,8 +5,21 @@
       <el-col :span="6">
         <el-card class="update-log">
           <template #header class="clearfix">
-
+              计算盘符已使用空间
           </template>
+          <div>前端</div>
+          <div>
+            该图采用Apache ECharts框架，由散点图饼状图两个图组成
+          </div>
+          <div>
+            由静态数据变化为后端获取的磁盘数据
+          </div>
+          <div>
+            鼠标悬浮可以看到盘符使用情况
+          </div>
+          <br>
+          <div>后端</div>
+          <div>采用github的oshi开源工具获取数据</div>
         </el-card>
       </el-col>
       <el-col :span="18">
@@ -20,20 +33,19 @@
 </template>
 
 <script>
-import {getServer} from "@/api/monitor/server";
-
+import { getServer } from '@/api/monitor/server'
 
 export default {
-  name: "Index",
+  name: 'Index',
   data() {
-    return {};
+    return {}
   },
   mounted() {
-    // this.init()
+    this.init()
   },
   methods: {
     init() {
-      const femaleData = [[161.2, 51.6], [167.5, 59.0], [159.5, 49.2], [157.0, 63.0], [155.8, 53.6],
+      const cData = [[161.2, 51.6], [167.5, 59.0], [159.5, 49.2], [157.0, 63.0], [155.8, 53.6],
         [170.0, 59.0], [159.1, 47.6], [166.0, 69.8], [176.2, 66.8], [160.2, 75.2],
         [172.5, 55.2], [170.9, 54.2], [172.9, 62.5], [153.4, 42.0], [160.0, 50.0],
         [147.2, 49.8], [168.2, 49.2], [175.0, 73.2], [157.0, 47.8], [167.6, 68.8],
@@ -85,8 +97,8 @@ export default {
         [156.2, 60.0], [149.9, 46.8], [169.5, 57.3], [160.0, 64.1], [175.3, 63.6],
         [169.5, 67.3], [160.0, 75.5], [172.7, 68.2], [162.6, 61.4], [157.5, 76.8],
         [176.5, 71.8], [164.4, 55.5], [160.7, 48.6], [174.0, 66.4], [163.8, 67.3]
-      ];
-      const maleData = [[174.0, 65.6], [175.3, 71.8], [193.5, 80.7], [186.5, 72.6], [187.2, 78.8],
+      ]
+      const dData = [[174.0, 65.6], [175.3, 71.8], [193.5, 80.7], [186.5, 72.6], [187.2, 78.8],
         [181.5, 74.8], [184.0, 86.4], [184.5, 78.4], [175.0, 62.0], [184.0, 81.6],
         [180.0, 76.6], [177.8, 83.6], [192.0, 90.0], [176.0, 74.6], [174.0, 71.0],
         [184.0, 79.6], [192.7, 93.8], [171.5, 70.0], [173.0, 72.4], [176.0, 85.9],
@@ -136,16 +148,16 @@ export default {
         [180.3, 73.2], [167.6, 76.3], [183.0, 65.9], [183.0, 90.9], [179.1, 89.1],
         [170.2, 62.3], [177.8, 82.7], [179.1, 79.1], [190.5, 98.2], [177.8, 84.1],
         [180.3, 83.2], [180.3, 83.2]
-      ];
-      let myChart = this.echarts.init(document.getElementById('main'));
+      ]
+      let myChart = this.echarts.init(document.getElementById('main'))
       let option
 
       function calculateAverage(data, dim) {
-        let total = 0;
+        let total = 0
         for (var i = 0; i < data.length; i++) {
-          total += data[i][dim];
+          total += data[i][dim]
         }
-        return (total /= data.length);
+        return (total /= data.length)
       }
 
       let scatterOption = (option = {
@@ -158,27 +170,27 @@ export default {
         series: [
           {
             type: 'scatter',
-            id: 'female',
-            dataGroupId: 'female',
+            id: 'cData',
+            dataGroupId: 'cData',
             universalTransition: {
               enabled: true,
-              delay: function (idx, count) {
-                return Math.random() * 400;
+              delay: function(idx, count) {
+                return Math.random() * 400
               }
             },
-            data: femaleData
+            data: cData
           },
           {
             type: 'scatter',
-            id: 'male',
-            dataGroupId: 'male',
+            id: 'dData',
+            dataGroupId: 'dData',
             universalTransition: {
               enabled: true,
-              delay: function (idx, count) {
-                return Math.random() * 400;
+              delay: function(idx, count) {
+                return Math.random() * 400
               }
             },
-            data: maleData
+            data: dData
           }]
       })
       let barOption = {
@@ -187,61 +199,87 @@ export default {
           data: []
         },
         yAxis: {},
+        tooltip: {
+          trigger: 'item',
+          axisPointer: {
+            type: 'shadow'
+          },
+          formatter: '{b}{a} : {c}G'
+        },
+        legend:{},
         series: [
           {
+            name: '已使用容量',
             type: 'bar',
             id: 'total',
             data: [
               {
-                value: calculateAverage(maleData, 0),
-                groupId: 'male'
+                value: 200,
+                groupId: 'cData'
               },
               {
-                value: calculateAverage(femaleData, 0),
-                groupId: 'female'
+                value: 400,
+                groupId: 'dData'
               }
             ],
             universalTransition: {
               enabled: true,
-              seriesKey: ['female', 'male'],
-              delay: function (idx, count) {
-                return Math.random() * 400;
+              seriesKey: ['cData', 'dData'],
+              delay: function(idx, count) {
+                return Math.random() * 400
               }
             }
           }
         ]
       }
-      let currentOption = scatterOption;
-      myChart.setOption(currentOption, true);
+      let currentOption = scatterOption
+      myChart.setOption(currentOption, true)
 
-      setInterval(() => {
-        currentOption = currentOption === scatterOption ? barOption : scatterOption;
-        myChart.setOption(currentOption, true);
+      let timer = setInterval(() => {
+        currentOption = barOption
+        myChart.setOption(currentOption, true)
         if (currentOption === barOption) {
           getServer().then(response => {
-            let {sysFiles} = response.data;
+            let { sysFiles } = response.data
             let typeName = []
+            let useds = []
             sysFiles.forEach(i => {
               typeName.push(i.typeName)
+              useds.push(Number(i.used.split(' ')[0]))
             })
-            console.log(typeName)
             myChart.setOption({
               xAxis: {
-                data: typeName
+                type: 'category',
+                data: typeName.slice(0, 2)
               },
-            }, true);
-          });
+              series: [
+                {
+                  data: [
+                    {
+                      value: useds[0],
+                      groupId: 'cData'
+                    },
+                    {
+                      value: useds[1],
+                      groupId: 'dData'
+                    }
+                  ]
+                }
+              ]
+            })
+          })
         }
-      }, 2000);
+        clearInterval(timer)
+      }, 2000)
     }
   }
-};
+}
 </script>
 
 <style scoped lang="scss">
 #main {
-  width: 600px;
-  height: 400px;
+  width: 100%;
+  height: 700px;
 }
 
 .home {
